@@ -1,0 +1,30 @@
+#!/bin/sh
+## cdselector.sh for  in /home/devesno/Projects/Perso/cdSelector
+## 
+## Made by 
+## Login   <lucas.cheminade@epitech.eu>
+## 
+## Started on  Thu Jun  8 00:26:01 2017 
+## Last update Thu Jun  8 00:39:58 2017 
+##
+
+DIALOG=${DIALOG=dialog}
+tmpfile=`tempfile 2> /dev/null` || tmpfile=/tmp/cdselector.tmp$$
+trap "rm -f $tmpfile" 0 1 2 3 5 15
+
+$DIALOG --clear --title "cdSelector" --menu "Sélectionnez le dossier dans lequel se déplacer:" 20 51 5 \
+	"$HOME/Projects/PSU" "PSU"			\
+	"$HOME/Projects/CPE" "CPE"			\
+	"$HOME/Projects/Graphical" "Graphical"		\
+	"$HOME/Projects/Perso" "Perso" 2> $tmpfile
+
+return_value=$?
+choice=`cat $tmpfile`
+case $return_value in
+    0)	cd $choice;;
+    1)	clear;;
+    255) clear;;
+esac
+
+clear
+pwd
